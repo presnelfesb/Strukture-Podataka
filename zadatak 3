@@ -32,6 +32,7 @@ int UnosIspred(position);
 int sortiraj(position);
 int ucitajdat(position);
 int isprintajdat(position);
+int sortiraniunos(position);
 
 int main(void)
 {
@@ -82,11 +83,11 @@ int main(void)
 		{
 			sortiraj(&head);
 		}
-		else if(k == 9)
+		else if (k == 9)
 		{
 			ucitajdat(&head);
 		}
-		else if(k == 10) 
+		else if (k == 10)
 		{
 			isprintajdat(head.next);
 		}
@@ -116,7 +117,7 @@ int odabir()
 	printf("9. Ucitaj iz datoteke\n");
 	printf("10.Isprintaj datoteku\n");
 	printf("11. Izadi iz programa\n");
-	
+
 
 	scanf(" %d", &n);
 	return n;
@@ -140,7 +141,7 @@ int unesi(position p)
 	if (p == NULL) return -1;
 
 	printf("Unesite ime, prezime i godinu rodenja:\n");
-	scanf(" %s %s %d\n", p->ime, p->prezime, &p->godina);
+	scanf(" %s %s %d", p->ime, p->prezime, &p->godina);
 
 	return 0;
 }
@@ -219,7 +220,7 @@ int Brisi(position p)
 {
 	position temp = NULL;
 	p = traziPret(p);
-	
+
 	if (p == NULL)
 	{
 		printf("Trazeno prezime se ne nalazi u listi.");
@@ -251,12 +252,12 @@ position traziPret(position p)
 
 	while (p->next != NULL && strcmp(p->next->prezime, prez) != 0)
 		p = p->next;
-	
+
 	if (p->next == NULL)
 		return NULL;
-	
+
 	free(prez);
-	
+
 	return p;
 
 }
@@ -296,7 +297,7 @@ int sortiraj(position p)
 				prev_j->next = temp;
 				j->next = temp->next;
 				temp->next = j;
-				
+
 				j = temp;
 			}
 			prev_j = j;
@@ -313,7 +314,7 @@ int ucitajdat(position p)
 	FILE* fp = NULL;
 	position q = NULL;
 	int k = 0;
-	
+
 
 
 	ime = (char*)malloc(duzina * sizeof(char));
@@ -327,15 +328,15 @@ int ucitajdat(position p)
 		strcat(ime, ".txt");
 
 	fp = fopen(ime, "r");
-	if (fp = NULL)
+	if (fp == NULL)
 	{
 		printf("Datoteka nije otvorena");
 		return -1;
 	}
 	while (!feof(fp))
 	{
-		k=stvori(&q);
-		if(k) break;
+		k = stvori(&q);
+		if (k) break;
 		fscanf(fp, " %s %s %d", q->ime, q->prezime, &q->godina);
 		q->next = p->next;
 		p->next = q;
@@ -351,7 +352,7 @@ isprintajdat(position p)
 	char *ime = NULL;
 
 	ime = (char*)malloc(duzina * sizeof(char));
-	if (ime == NULL) 
+	if (ime == NULL)
 		return -1;
 
 	memset(ime, '\0', duzina);
@@ -361,7 +362,7 @@ isprintajdat(position p)
 
 	if (strchr(ime, '.') == NULL)
 		strcat(ime, ".txt");
-	
+
 	fp = fopen(ime, "w");
 	if (fp == NULL)
 	{
@@ -382,17 +383,11 @@ isprintajdat(position p)
 	return 0;
 }
 
+int sortiraniunos(position p)
+{
+	position q = NULL;
 
+	
+	while(strcmp(q->prezime,p->prezime)<0)
 
-
-
-
-
-
-
-
-
-
-
-
-
+}
