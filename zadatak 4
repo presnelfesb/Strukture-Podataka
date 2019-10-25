@@ -53,7 +53,7 @@ int main()
 	return 0;
 }
 
-int stvori(position *p)
+int stvori(position* p)
 {
 	position q = NULL;
 
@@ -71,7 +71,7 @@ int ucitajdat(position p)
 {
 	position q = NULL;
 	char* ime = NULL;
-	FILE *fp = NULL;
+	FILE* fp = NULL;
 	int k = 0;
 
 	ime = (char*)malloc(duzina * sizeof(char));
@@ -190,4 +190,54 @@ int zbroji(position p1, position p2, position z)
 	}
 	return 0;
 
+}
+
+int pomnozi(position p1, position p2, position u)
+{
+	int k = 0;
+	position q = NULL;
+	position temp = NULL;
+	position i = NULL;
+	position j = NULL;
+
+	i = p1;
+	while (i != NULL)
+	{
+		j = p2;
+		while (j != NULL)
+		{
+			k = stvori(&q);
+			if (k==-1)
+			{
+				printf("memorija nije alocirana");
+				return -1;
+			}
+			q->ekspo = i->ekspo + j->ekspo;
+			q->koef = i->koef * j->koef;
+			temp = u;
+
+			while ((temp->next != NULL) && (temp->next->ekspo > q->ekspo))
+				temp = temp->next;
+			if (temp->next != NULL && temp->next->ekspo == q->ekspo)
+			{
+				temp->next->koef += q->koef;
+				free(q);
+				if (temp->next->koef == 0)
+				{
+					q = temp->next;
+					temp->next = q->next;
+					free(q);
+				}
+
+			}
+			else
+			{
+				q->next = temp->next;
+				temp->next = q;
+			}
+			j = j->next;
+		}
+		i = i->next;
+	}
+	return 0;
 }
