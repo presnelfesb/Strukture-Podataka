@@ -94,7 +94,7 @@ int ucitajdat(position p)
 	while (!feof(fp))
 	{
 		k = stvori(&q);
-		if (k = -1) return - 1;
+		if (k = -1) return -1;
 
 		fscanf(fp, "%d %d", &q->koef, &q->ekspo);
 		while (p->next != NULL && p->next->ekspo > q->ekspo)
@@ -114,20 +114,20 @@ int ucitajdat(position p)
 	return 0;
 }
 
-int ispis(position p)
+int ispisi(position p)
 {
 	int k = 1;
 	while (p != NULL)
 	{
 		if (k == 1)
 		{
-			printf("%dx^%d", p->koef, p->ekspo);
+			printf("%dx^%d ", p->koef, p->ekspo);
 			k = 0;
 		}
 		else if (p->koef > 0)
-			printf("+%dx^%d", p->koef, p->ekspo);
+			printf("+%dx^%d ", p->koef, p->ekspo);
 		else if (p->koef < 0)
-			printf("%dx^%d", p->koef, p->ekspo);
+			printf("%dx^%d ", p->koef, p->ekspo);
 		else
 			continue;
 
@@ -138,5 +138,56 @@ int ispis(position p)
 
 int zbroji(position p1, position p2, position z)
 {
+	int k = 0;
+	position q = NULL;
+	position temp = NULL;
+
+	while (p1 != NULL && p2 != NULL)
+	{
+		k = stvori(&q);
+		if (k == -1)
+			return -1;
+		if (p1->ekspo > p2->ekspo)
+		{
+			q->ekspo = p1->ekspo;
+			q->koef = p1->koef;
+			p1 = p1->next;
+		}
+		else if (p2->ekspo > p1->ekspo)
+		{
+			q->ekspo = p2->ekspo;
+			q->koef = p2->koef;
+			p2 = p2->next;
+		}
+		else
+		{
+			q->ekspo = p1->ekspo;
+			q->koef = p1->koef + p2->koef;
+			p1 = p1->next;
+			p2 = p2->next;
+		}
+		q->next = z->next;
+		z->next = q;
+		z = q;
+	}
+
+	if (p1 == NULL)
+		temp = p2;
+	else
+		temp = p1;
+
+	while (temp != NULL)
+	{
+		k = stvori(&q);
+		if (k == -1)
+			return -1;
+		q->ekspo = temp->ekspo;
+		q->koef = temp->koef;
+		q->next = z->next;
+		z->next = q;
+		z = q;
+		temp = temp->next;
+	}
+	return 0;
 
 }
