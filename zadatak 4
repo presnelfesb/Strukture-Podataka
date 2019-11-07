@@ -22,7 +22,7 @@ int ispisi(position);
 int zbroji(position, position, position);
 int pomnozi(position, position, position);
 
-int main()
+int main(void)
 {
 	POLINOM p1, p2, z, u;
 	int k = 0;
@@ -32,7 +32,7 @@ int main()
 	z.next = NULL;
 	u.next = NULL;
 
-	printf("\nPolinom 1: ");
+	printf("Polinom 1: ");
 	k = ucitajdat(&p1);
 	if (k == -1) return -1;
 	ispisi(p1.next);
@@ -57,7 +57,7 @@ int stvori(position* p)
 {
 	position q = NULL;
 
-	*p = (position)malloc(duzina * sizeof(POLINOM));
+	*p = (position)malloc(sizeof(POLINOM));
 	if (*p == NULL) return -1;
 
 	q = *p;
@@ -94,15 +94,20 @@ int ucitajdat(position p)
 	while (!feof(fp))
 	{
 		k = stvori(&q);
-		if (k = -1) return -1;
-
-		fscanf(fp, "%d %d", &q->koef, &q->ekspo);
+		
+		fscanf(fp," %d %d", &q->koef, &q->ekspo);
 		while (p->next != NULL && p->next->ekspo > q->ekspo)
 			p = p->next;
 		if (p->next != NULL && p->next->ekspo == q->ekspo)
 		{
 			p->next->koef = p->next->koef + q->koef;
 			free(q);
+			if (p->next->koef == 0)
+			{
+				q = p->next;
+				p->next = q->next;
+				free(q);
+			}
 		}
 		else
 		{
@@ -113,6 +118,7 @@ int ucitajdat(position p)
 	fclose(fp);
 	return 0;
 }
+
 
 int ispisi(position p)
 {
@@ -207,7 +213,7 @@ int pomnozi(position p1, position p2, position u)
 		while (j != NULL)
 		{
 			k = stvori(&q);
-			if (k==-1)
+			if (k == -1)
 			{
 				printf("memorija nije alocirana");
 				return -1;
