@@ -43,7 +43,7 @@ int main(void)
 	head.next = NULL;
 
 
-	while (k != 11)
+	while (k != 12)
 	{
 		k = 0;
 		k = odabir();
@@ -93,6 +93,10 @@ int main(void)
 		}
 		else if (k == 11)
 		{
+			sortiraniunos(&head);
+		}
+		else if (k == 12)
+		{
 			continue;
 		}
 		else
@@ -116,7 +120,8 @@ int odabir()
 	printf("8. Sortiraj listu po prezimenu\n");
 	printf("9. Ucitaj iz datoteke\n");
 	printf("10.Isprintaj datoteku\n");
-	printf("11. Izadi iz programa\n");
+	printf("11. Sortirani unos\n");
+	printf("12. Izadi iz programa\n");
 
 
 	scanf(" %d", &n);
@@ -386,8 +391,18 @@ isprintajdat(position p)
 int sortiraniunos(position p)
 {
 	position q = NULL;
+	int k = -1;
 
+	k = stvori(&q);
+	k = unesi(q);
+
+	while (p->next!=NULL && strcmp(q->prezime, p->next->prezime) > 0 )
+		p = p->next;
+
+	q->next = p->next;
+	p->next = q;
 	
-	while(strcmp(q->prezime,p->prezime)<0)
+
+	return 0;
 
 }
