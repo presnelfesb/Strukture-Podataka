@@ -351,7 +351,7 @@ int ucitajdat(position p)
 }
 
 
-isprintajdat(position p)
+int isprintajdat(position p)
 {
 	FILE* fp = NULL;
 	char *ime = NULL;
