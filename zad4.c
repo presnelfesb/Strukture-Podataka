@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 
-
 struct polinom;
 typedef struct polinom Polinom;
 typedef struct polinom *position;
