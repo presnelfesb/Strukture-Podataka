@@ -140,7 +140,7 @@ int Zbroji(position p1, position p2, position z)
 		}
 		q->next = z->next;
 		z->next = q;
-		z = q;
+		z = z->next;
 	}
 
 	if (p1 != NULL)
@@ -156,7 +156,7 @@ int Zbroji(position p1, position p2, position z)
 	
 		q->next = z->next;
 		z->next = q;
-		z = q;
+		z = z->next;
 
 		temp = temp->next;
 	}
