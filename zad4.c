@@ -91,7 +91,6 @@ int Unos(position p)
 
 int Stvori(position *p)
 {
-	position q = NULL;
 	*p = (position)malloc( sizeof(Polinom));
 	return 0;
 
