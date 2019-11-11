@@ -77,7 +77,6 @@ int Unos(position p)
 		if (p->next != NULL && q->expo == p->next->expo)
 		{
 			p->next->koef = p->next->koef + q->koef;
-			free(q);
 		}
 		else
 		{
