@@ -12,10 +12,9 @@ struct lista {
 	position next;
 };
 
-int stvori(position*);
 int unos(position);
 int ispis(position);
-int unija(position,position,position);
+int unija(position, position, position);
 int presjek(position, position, position);
 
 int main(void)
@@ -34,7 +33,7 @@ int main(void)
 	unos(&l2);
 	printf("\nLista 2: ");
 	ispis(&l2);
-	
+
 	u.next = NULL;
 	printf("\nUnija liste 1 i 2 je: ");
 	unija(&l1, &l2, &u);
@@ -42,7 +41,7 @@ int main(void)
 
 	p.next = NULL;
 	printf("\nPresjek liste 1 i 2 je: ");
-	b=presjek(&l1, &l2, &p);
+	b = presjek(&l1, &l2, &p);
 	if (b == 0)
 		printf("prazan skup\n");
 	else
@@ -68,7 +67,8 @@ int unos(position p)
 
 	for (i = 0; i < n; i++)
 	{
-		stvori(&q);
+		q = (position)malloc(sizeof(Lista));
+
 		printf("Unesite %d. clan: ", i + 1);
 		scanf("%d", &q->clan);
 
@@ -89,12 +89,6 @@ int unos(position p)
 }
 
 
-int stvori(position* p)
-{
-	*p = (position*)malloc(sizeof(Lista));
-	return 0;
-}
-
 int ispis(position p)
 {
 	p = p->next;
@@ -114,13 +108,14 @@ int ispis(position p)
 
 int unija(position l1, position l2, position u)
 {
-	position q=NULL, temp=NULL;
+	position q = NULL, temp = NULL;
 	l1 = l1->next;
 	l2 = l2->next;
 
 	while (l1 != NULL && l2 != NULL)
 	{
-		stvori(&q);
+		q = (position)malloc(sizeof(Lista));
+
 		if (l1->clan < l2->clan)
 		{
 			q->clan = l1->clan;
@@ -149,7 +144,8 @@ int unija(position l1, position l2, position u)
 
 	while (temp != NULL)
 	{
-		stvori(&q);
+		q = (position)malloc(sizeof(Lista));
+
 		q->clan = temp->clan;
 
 		q->next = u->next;
@@ -171,14 +167,15 @@ int presjek(position l1, position l2, position p)
 
 	while (l1 != NULL && l2 != NULL)
 	{
-		stvori(&q);
+		q = (position)malloc(sizeof(Lista));
+
 		if (l1->clan < l2->clan)
 			l1 = l1->next;
 
 		else if (l2->clan < l1->clan)
 			l2 = l2->next;
 
-		else 
+		else
 		{
 			q->clan = l1->clan;
 			l1 = l1->next;
@@ -189,7 +186,7 @@ int presjek(position l1, position l2, position p)
 			p = p->next;
 			b = b + 1;
 		}
-		
+
 	}
 	return b;
 }
