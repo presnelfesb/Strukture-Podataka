@@ -56,19 +56,26 @@ int Unos(position p)
 {
 	int n = 0;
 	int i = 0;
-	position q = NULL, temp = NULL;
+	position q = NULL;
+	position temp = NULL;
 
-
-	printf("Koliko cete unjeti clanova u polinom:"); scanf("%d", &n);
+	printf("Koliko cete unjeti clanova u polinom:"); 
+	scanf(" %d", &n);
 
 	temp = p;
 	for (i = 0; i < n; i++)
 	{
 		q = (position)malloc(sizeof(Polinom));
 
+		if (!q)
+		{
+			printf("GRESKA! Memorija nije alocirana");
+			return -1;
+		}
+
 		printf("Unesi %d. koeficijent: ",i+1);
 		scanf(" %d", &q->koef);
-		printf("\Unesi %d. eksponent: ",i+1);
+		printf("Unesi %d. eksponent: ",i+1);
 		scanf(" %d", &q->expo);
 
 		while (p->next != NULL && q->expo < p->next->expo)
@@ -114,6 +121,11 @@ int Zbroji(position p1, position p2, position z)
 	while (p1 != NULL && p2 != NULL)
 	{
 		q = (position)malloc(sizeof(Polinom));
+		if (!q)
+		{
+			printf("GRESKA! Memorija nije alocirana");
+			return -1;
+		}
 
 		if (p1->expo > p2->expo)
 		{
@@ -147,6 +159,12 @@ int Zbroji(position p1, position p2, position z)
 	while (temp != NULL)
 	{
 		q = (position)malloc(sizeof(Polinom));
+		if (!q)
+		{
+			printf("GRESKA! Memorija nije alocirana");
+			return -1;
+		}
+
 		q->koef = temp->koef;
 		q->expo = temp->expo;
 
@@ -176,12 +194,18 @@ int Umnozak(position p1, position p2, position u)
 		while (p2 != NULL)
 		{
 			u = temp2;
-			
+
 			q = (position)malloc(sizeof(Polinom));
+			if (!q)
+			{
+				printf("GRESKA! Memorija nije alocirana");
+				return -1;
+			}
+
 			q->koef = p1->koef * p2->koef;
 			q->expo = p1->expo + p2->expo;
 
-			
+
 			while (u->next != NULL && u->next->expo > q->expo)
 				u = u->next;
 
