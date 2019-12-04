@@ -2,130 +2,110 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <time.h>
 
-#define N 5
-#define VELICINA 20
+#define N 20 
 
-struct stog;
 typedef struct stog Stog;
 typedef struct stog* position;
-
 struct stog {
 	int el;
 	position next;
 };
 
-int push(position, int);
+int push(position);
 int pop(position);
-int unos(position, char*);
-int ispis(position);
+int opcije();
+int odabir(position);
 
 int main()
 {
 	Stog s;
 	s.next = NULL;
-	char* ime = NULL;
 
-	ime = (char*)malloc(sizeof(char) * VELICINA);
-	if (ime == NULL)
-	{
-		printf("Memorija nije alocirana");
-		return -1;
-	}
+	odabir(&s);
 
-	printf("Unesi ime datoteke: ");
-	scanf(" %s", ime);
-
-	unos(&s, ime);
-	printf("Rezultat je: %d", ispis(&s));
-
-	return 0;
+	
 
 }
 
-int unos(position p, char* ime)
+int opcije()
 {
-	position q = NULL;
-	FILE* fp = NULL;
-	char* temp;
+	int x = 0;
+	
+	while (x!=3)
+	{
+
+		printf("Odaberite opciju koju zelite izabrati:\n ");
+		printf("1.Push\n");
+		printf("2.Pop\n");
+		printf("3.Izlaz\n");
+
+		scanf("%d", &x);
+		if (x == 0 || x > 3 || x < 1)
+			printf("KRIVI BROJ\n\n");
+		
+	}
+	return x;
+}
+
+int odabir(position p)
+{
+	int x = 0;
 	int a = 0;
-	int b = 0;
 
-
-	fp = fopen(ime, "r");
-	if (fp == NULL)
+	while (x != 3)
 	{
-		printf("Datoteka nije otvorena");
-		return -1;
-	}
+		x = opcije();
 
-
-
-	while (!feof(fp))
-	{
-		q = (position)malloc(sizeof(Stog));
-		if (q == NULL)
+		switch (x)
 		{
-			printf("Memorija nije alocirana");
-			return -1;
+		case 3: break;
+		case 2: {
+			pop(&p);
+			break;
 		}
-
-		temp = (char*)malloc(sizeof(char) * N);
-
-		fscnaf(fp, " %s", temp);
-
-		if (isdigit(temp) != 0)
-		{
-			push(&p, atoi(temp));
+		case 1: {
+			printf("Unesi clan koji zelis staviti na stog\n");
+			scanf("%d", &a);
+			push(&p);
+			break;
 		}
-		else
-		{
-			a = pop(&p);
-			b = pop(&p);
-
-			if (strcmp(temp, '+') == 0)
-				push(&p, a + b);
-
-			else if (strcmp(temp, '-') == 0)
-				push(&p, a - b);
-
-			else if (strcmp(temp, '*') == 0)
-				push(&p, a * b);
-
 		}
-		free(q);
-		free(temp);
 	}
 	return 0;
+
 }
 
-int push(position p, int x)
+int push(position p)
 {
 	position q = NULL;
+	int x = 0;
+	srand(time(0));
 
+	x = rand() % 90 + 10;
+	
 	q = (position)malloc(sizeof(Stog));
-
-	q->el = x;
 	q->next = p->next;
 	p->next = q;
+	p->el =x ;
 
 	return 0;
 }
 
 int pop(position p)
 {
-	position q;
-	q = (position)malloc(sizeof(Stog));
+	position temp = NULL;
 
-	q->el = p->next->el;
-	p->next = p->next->next;
+	temp = p->next;
+	if (temp != NULL)
+	{
+		p->next = temp->next;
+		printf("%d", temp->el);
 
-	return q->el;
-}
-
-int ispis(position p)
-{
-	p = p->next;
-	return p->el;
+		free(temp);
+	}
+	else
+		printf("STOG JE PRAZAN");
+	return 0;
 }
