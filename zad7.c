@@ -40,7 +40,7 @@ int main()
 	scanf(" %s", ime);
 
 	unos(&s, ime);
-	printf("Rezultat je: %d", ispis(&s));
+	
 
 	return 0;
 
@@ -53,7 +53,9 @@ int unos(position p, char* ime)
 	char* temp = NULL;
 	int a = 0;
 	int b = 0;
-	char plus = '+', minus = '-', umnozak = '*';
+	char plus [2] = { '+' };
+	char minus [2] = { '-' };
+	char umnozak [2] = { '*' };
 
 
 	fp = fopen(ime, "r");
@@ -100,6 +102,7 @@ int unos(position p, char* ime)
 		free(q);
 		free(temp);
 	}
+	printf("Rezultat je: %d\n", ispis(&p));
 	return 0;
 }
 
@@ -118,13 +121,16 @@ int push(position p, int x)
 
 int pop(position p)
 {
-	position q;
+	position q=NULL;
+	int x = 0;
 	q = (position)malloc(sizeof(Stog));
 
-	q->el = p->next->el;
+	q = p->next;
+	x = p->next->el;
 	p->next = p->next->next;
+	free(q);
 
-	return q->el;
+	return x;
 }
 
 int ispis(position p)
