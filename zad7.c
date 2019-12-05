@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
 
 #define N 5
 #define VELICINA 20
@@ -48,9 +50,10 @@ int unos(position p, char* ime)
 {
 	position q = NULL;
 	FILE* fp = NULL;
-	char* temp;
+	char* temp = NULL;
 	int a = 0;
 	int b = 0;
+	char plus = '+', minus = '-', umnozak = '*';
 
 
 	fp = fopen(ime, "r");
@@ -59,7 +62,7 @@ int unos(position p, char* ime)
 		printf("Datoteka nije otvorena");
 		return -1;
 	}
-
+	
 
 
 	while (!feof(fp))
@@ -73,9 +76,9 @@ int unos(position p, char* ime)
 
 		temp = (char*)malloc(sizeof(char) * N);
 
-		fscnaf(fp, " %s", temp);
+		fscanf(fp, " %s", temp);
 
-		if (isdigit(temp) != 0)
+		if (isdigit(temp[0]) != 0)
 		{
 			push(&p, atoi(temp));
 		}
@@ -84,13 +87,13 @@ int unos(position p, char* ime)
 			a = pop(&p);
 			b = pop(&p);
 
-			if (strcmp(temp, '+') == 0)
+			if (strcmp(temp,plus) == 0)
 				push(&p, a + b);
 
-			else if (strcmp(temp, '-') == 0)
+			else if (strcmp(temp,minus) == 0)
 				push(&p, a - b);
 
-			else if (strcmp(temp, '*') == 0)
+			else if (strcmp(temp, umnozak) == 0)
 				push(&p, a * b);
 
 		}
