@@ -15,27 +15,46 @@ struct CvorStabla {
 };
 
 int ispis(stablo);
-
+int md(stablo);
+stablo Cd(stablo);
 
 int main(void) {
 	Stablo Direktorij;
+	stablo Temp = NULL;
+	int x = 0;
+	
 	Direktorij.PD = NULL;
 	Direktorij.NB = NULL;
 
-	int x = 0;
+	
+
+	
 
 	printf("Unesi ime Direktorija: \n");
 	scanf(" %s", Direktorij.ime);
 
+	ispis(&Direktorij);
 	while (x != 5)
 	{
-		ispis(&Direktorij);
+		
 		scanf("%d", &x);
 		if (x == 1)
 		{
 			md(&Direktorij);
 		}
+		if (x == 3)
+		{
+			Temp = Cd(&Direktorij);
+			if (Temp == NULL)
+				printf("ERROR data not found please try again\n");
+			else
+			{
+				Temp = (stablo)malloc(sizeof(Stablo));
+				ispis(Temp);
+			}
+		}
 	}
+	return 0;
 }
 
 int ispis(stablo p)
@@ -59,7 +78,38 @@ int ispis(stablo p)
 	}
 
 	return 0;
+}
 
+int md(stablo p)
+{
+	stablo q = NULL;
+	q = (stablo)malloc(sizeof(Stablo));
+	q->NB = p->PD->NB;
+	q->PD = NULL;
+	return 0;
+}
 
+stablo Cd(stablo p)
+{
+	stablo temp = NULL;
+	char a[N] = {"\0"};
 
+	
+
+	if (p->PD != NULL)
+	{
+		if (strcmp(p->ime, a) == 0)
+			return temp;
+		else
+			temp = Cd(p->PD);
+	}
+	if (p->NB != NULL)
+	{
+		if (strcmp(p->ime, a) == 0)
+			return temp;
+		else
+			temp = Cd(p->NB);
+	}
+	
+	return temp;
 }
