@@ -33,7 +33,7 @@ int main(void) {
 	stablo Temp = NULL;
 	int x = 0;
 	char* a=NULL;
-	char b = { "/0" };
+	char b[N] = { "/0" };
 
 	Direktorij.PD = NULL;
 	Direktorij.NB = NULL;
