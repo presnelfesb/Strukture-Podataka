@@ -66,7 +66,6 @@ int main()
 		else if (x == 4)
 		{
 			printf("Ispis je:\n\n");
-			printf("Od broja: ");
 			ispis(&s);
 			printf("\n\n");
 		}
@@ -157,17 +156,24 @@ int ispis(position s)
 			printf("Od broja %d \n", s->el);
 
 
-	
+
 		if (s->LD != NULL)
 		{
 			printf("Njegovo lijevo dijete je:");
 			ispis(s->LD);
-
+		}
+		else
+		{
+			printf("Nema lijevog djeteta.");
 		}
 		if (s->RD != NULL)
 		{
 			printf("Njegovo desno dijete je:");
 			ispis(s->RD);
+		}
+		else
+		{
+			printf("Nema desnog djeteta.");
 		}
 	}
 	return 0;
