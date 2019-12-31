@@ -44,7 +44,7 @@ int main()
 	scanf(" %s", ime);
 
 	unos(ime, &s);
-	ispis(&s);
+	//ispis(&s);
 
 	return 0;
 }
@@ -96,6 +96,7 @@ int unos(char *ime, position p)
 		free(temp1);
 	}
 	p = pop(&q);
+	ispis(p);
 	return 0;
 }
 
@@ -104,7 +105,7 @@ int ispis(position p)
 	if (p != NULL)
 	{
 		ispis(p->LD);
-		printf("%s ", p->z[4]);
+		printf("%s ", p->z);
 		ispis(p->RD);
 	}
 	return 0;
