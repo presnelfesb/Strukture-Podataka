@@ -25,17 +25,15 @@ struct stog {
 	pozicija next;
 };
 
-int unos(char*, position);
+position unos(char*);
 int ispis(position);
-int push(pozicija , position );
-position pop(pozicija );
+int push(pozicija, position);
+position pop(pozicija);
 
 
 int main()
 {
-	Stablo s;
-	s.LD = NULL;
-	s.RD = NULL;
+	position p = NULL;
 
 	char*ime = NULL;
 
@@ -43,19 +41,19 @@ int main()
 	printf("Unesite naziv datoteke: ");
 	scanf(" %s", ime);
 
-	unos(ime, &s);
-	//ispis(&s);
+	p = unos(ime);
+	ispis(p);
 
 	return 0;
 }
 
-int unos(char *ime, position p)
+position unos(char *ime)
 {
 	FILE *fp = NULL;
-	char* temp=NULL;
+	char* temp = NULL;
 	Stog q;
 	q.next = NULL;
-	position temp1=NULL;
+	position temp1 = NULL;
 	position a = NULL;
 	position b = NULL;
 
@@ -63,7 +61,6 @@ int unos(char *ime, position p)
 	if (fp == NULL)
 	{
 		printf("Datoteka nije otvorena");
-		return -1;
 	}
 
 	while (!feof(fp))
@@ -76,7 +73,7 @@ int unos(char *ime, position p)
 			temp1->z = temp;
 			temp1->LD = NULL;
 			temp1->RD = NULL;
-			
+
 
 			push(&q, temp1);
 		}
@@ -88,16 +85,15 @@ int unos(char *ime, position p)
 			temp1->z = temp;
 			temp1->LD = b;
 			temp1->RD = a;
-		
+
 
 			push(&q, temp1);
 		}
 		free(temp);
 		free(temp1);
 	}
-	p = pop(&q);
-	ispis(p);
-	return 0;
+
+	return pop(&q);
 }
 
 int ispis(position p)
@@ -116,12 +112,10 @@ int ispis(position p)
 int push(pozicija p, position x)
 {
 	pozicija q = NULL;
-	position temp;
 
 	q = (pozicija)malloc(sizeof(Stog));
-	temp = x;
 
-	q->s = temp;
+	q->s = x;
 	q->next = p->next;
 	p->next = q;
 
@@ -132,7 +126,6 @@ position pop(pozicija p)
 {
 	pozicija q = NULL;
 	position x = NULL;
-	q = (pozicija)malloc(sizeof(Stog));
 
 	q = p->next;
 	x = p->next->s;
