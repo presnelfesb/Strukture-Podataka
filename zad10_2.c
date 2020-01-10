@@ -34,7 +34,6 @@ position pop(pozicija);
 int main()
 {
 	position p = NULL;
-
 	char*ime = NULL;
 
 	ime = (char*)malloc(sizeof(char)*M);
@@ -42,7 +41,10 @@ int main()
 	scanf(" %s", ime);
 
 	p = unos(ime);
+
 	ispis(p);
+
+	system("pause");
 
 	return 0;
 }
@@ -61,13 +63,14 @@ position unos(char *ime)
 	if (fp == NULL)
 	{
 		printf("Datoteka nije otvorena");
+		return EXIT_FAILURE;
 	}
 
 	while (!feof(fp))
 	{
 		temp = (char*)malloc(N * sizeof(char));
 		fscanf(fp, " %s", temp);
-		if ((temp[0] != '+') && (temp[0] && '*') && (temp[0] != '-'))
+		if ((temp[0] != '+') && (temp[0] != '*') && (temp[0] != '-') && (temp[0]!='/'))
 		{
 			temp1 = (position)malloc(sizeof(Stablo));
 			temp1->z = temp;
@@ -89,10 +92,8 @@ position unos(char *ime)
 
 			push(&q, temp1);
 		}
-		free(temp);
-		free(temp1);
 	}
-
+	fclose(fp);
 	return pop(&q);
 }
 
@@ -100,10 +101,13 @@ int ispis(position p)
 {
 	if (p != NULL)
 	{
+		printf("(");
 		ispis(p->LD);
 		printf("%s ", p->z);
 		ispis(p->RD);
+		printf(")");
 	}
+	
 	return 0;
 }
 
