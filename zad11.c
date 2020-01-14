@@ -22,13 +22,15 @@ struct cvor {
 
 struct HashT {
 	int VelT;
-	Lista* hashliste;// pokazivaci na pokazivace koristimo ih kako bi imali redove listi u hash tablici
+	Lista* hashliste;// pokazivaci na koji pokazuje na podatke tipe Lista (koji je pokazivac koji koristimo u prvoj strukturi)
 };
 
 
 Hashtab Tablica(int);
 int Kljuc(int, char*);
+position trazi(Hashtab);
 int odabir();
+int ispis(Hashtab);
 
 
 
@@ -41,13 +43,14 @@ int main(void)
 	char b[N] = { "" };
 	Hashtab H = NULL;
 	Lista coek = NULL;
+	Lista p = NULL;
 
 
 
 	VelTab = 11;
 	H = Tablica(VelTab);
 
-	while (x != 3)
+	while (x != 4)
 	{
 		x = odabir();
 		
@@ -65,11 +68,47 @@ int main(void)
 			}
 			if (H->hashliste[i] == NULL)
 			{
-				strcpy(H->hashliste[i]->prezime, temp);//briga ovdje je greska nez kako dalje lol sretno
-				printf(" %s", H->hashliste[i]->prezime);
+				coek->next = H->hashliste[i];
+				H->hashliste[i] = coek;
+				strcpy(coek->prezime, b);
+				printf("\nUnesi Ime: ");
+				scanf(" %s", b);
+				strcpy(coek->ime, b);
+				printf("\nUnesi MB: ");
+				scanf("%d", coek->MB);
+				}
+			if (H->hashliste[i] != NULL)
+			{
+				strcpy(coek->prezime, b);
+				printf("\nUnesi Ime: ");
+				scanf(" %s", b);
+				strcpy(coek->ime, b);
+				printf("\nUnesi MB: ");
+
+				p = H->hashliste[i];
+				while (strcmp(p->prezime, coek->prezime) < 0)
+					p = p->next;
+				coek->next = p->next;
+				p->next = coek;
 			}
 		}
 
+		if (x == 2)
+		{
+			p = trazi(H);
+			if(p!=NULL)
+				{
+					printf("Zelite li ispisati MB?\n");
+					scanf(" %s", b);
+					if (strcmp(b, "DA") == 0 || strcmp(b, "Da") == 0 || strcmp(b, "da") == 0 || strcmp(b, "dA") == 0)
+						printf("MB=", p->MB);
+				}
+		}
+
+		if (x == 3)
+		{
+			ispis(H);
+		}
 	}
 
 	return 0;
@@ -122,6 +161,7 @@ int odabir()
 		printf("1.Unos\n");
 		printf("2.Trazi\n");
 		printf("3.Ispis\n");
+		printf("4.Izlaz\n");
 
 		scanf("%d", &x);
 		if (x < 1 || x>3)
@@ -129,4 +169,45 @@ int odabir()
 	}
 
 	return x;
+}
+
+position trazi(Hashtab H)
+{
+	char a[N] = { "" };
+	char* t;
+	Lista x = NULL;
+	int i = 0;
+
+	printf("\n Unesi trazeno prezime: ");
+	scanf(" %s", a);
+	t = &a;
+
+	i = Kljuc(H->VelT, t);
+
+	x = H->hashliste[i];
+	while (strcmp(x->prezime, t) !=0 )
+		x = x->next;
+
+	if (x == NULL)
+		printf("Nema tog coeka");
+
+	return x;
+}
+
+int ispis(Hashtab H)
+{
+	int i = 0;
+	Lista p = NULL;
+	
+	for (i = 0;i < 11;i++)
+	{
+		p = H->hashliste[i];
+		while (p != NULL)
+		{
+			p = p->next;
+			printf("%s %s %d", p->ime, p->prezime, p->MB);
+		}
+	}
+
+	return 0;
 }
