@@ -22,7 +22,7 @@ struct cvor {
 
 struct HashT {
 	int VelT;
-	Lista* hashliste;// pokazivaci na koji pokazuje na podatke tipe Lista (koji je pokazivac koji koristimo u prvoj strukturi)
+	Lista hashliste [11];// pokazivaci na koji pokazuje na podatke tipe Lista (koji je pokazivac koji koristimo u prvoj strukturi)
 };
 
 
@@ -61,30 +61,30 @@ int main(void)
 			temp = b;
 			i = Kljuc(VelTab, temp);
 			coek = (Lista)malloc(sizeof(struct cvor));
-			if (coek = NULL)
+			if (coek == NULL)
 			{
 				printf("GRESKA U ALOKACIJI MEMORIJE");
 				exit(-1);
 			}
 			if (H->hashliste[i] == NULL)
 			{
-				coek->next = H->hashliste[i];
+				coek->next= H->hashliste[i];
 				H->hashliste[i] = coek;
 				strcpy(coek->prezime, b);
 				printf("\nUnesi Ime: ");
 				scanf(" %s", b);
 				strcpy(coek->ime, b);
 				printf("\nUnesi MB: ");
-				scanf("%d", coek->MB);
+				scanf("%d", &coek->MB);
 			}
-			if (H->hashliste[i] != NULL)
+			else if (H->hashliste[i] != NULL)
 			{
 				strcpy(coek->prezime, b);
 				printf("\nUnesi Ime: ");
 				scanf(" %s", b);
 				strcpy(coek->ime, b);
 				printf("\nUnesi MB: ");
-				scanf("%d", coek->MB);
+				scanf("%d", &coek->MB);
 
 				p = H->hashliste[i];
 				while (strcmp(p->prezime, coek->prezime) < 0)
@@ -128,7 +128,7 @@ Hashtab Tablica(int VelTab)
 	}
 	H->VelT = VelTab;
 
-	H->hashliste = (Lista*)malloc(sizeof(Lista) * H->VelT);
+	//H->hashliste = (Lista*)malloc(sizeof(Lista) * H->VelT);
 	if (H->hashliste == NULL)
 	{
 		printf("GRESKA U ALOKACIJI MEMORIJE");
@@ -156,7 +156,7 @@ int Kljuc(int VelTab, char* Prez)
 int odabir()
 {
 	int x = 0;
-	while (x < 1 || x>3)
+	while (x < 1 || x>4)
 	{
 		printf("Unesi naredbu koju zelis:\n");
 		printf("1.Unos\n");
@@ -165,7 +165,7 @@ int odabir()
 		printf("4.Izlaz\n");
 
 		scanf("%d", &x);
-		if (x < 1 || x>3)
+		if (x < 1 || x>4)
 			printf("To nije opcija");
 	}
 
@@ -205,8 +205,9 @@ int ispis(Hashtab H)
 		p = H->hashliste[i];
 		while (p != NULL)
 		{
+			
+			printf("%s %s %d\n", p->ime, p->prezime, p->MB);
 			p = p->next;
-			printf("%s %s %d", p->ime, p->prezime, p->MB);
 		}
 	}
 
