@@ -53,12 +53,12 @@ int main(void)
 	while (x != 4)
 	{
 		x = odabir();
-		
+
 		if (x == 1)
 		{
 			printf("Unesi prezime:");
 			scanf(" %s", b);
-			temp = &b;
+			temp = b;
 			i = Kljuc(VelTab, temp);
 			coek = (Lista)malloc(sizeof(struct cvor));
 			if (coek = NULL)
@@ -76,7 +76,7 @@ int main(void)
 				strcpy(coek->ime, b);
 				printf("\nUnesi MB: ");
 				scanf("%d", coek->MB);
-				}
+			}
 			if (H->hashliste[i] != NULL)
 			{
 				strcpy(coek->prezime, b);
@@ -84,6 +84,7 @@ int main(void)
 				scanf(" %s", b);
 				strcpy(coek->ime, b);
 				printf("\nUnesi MB: ");
+				scanf("%d", coek->MB);
 
 				p = H->hashliste[i];
 				while (strcmp(p->prezime, coek->prezime) < 0)
@@ -96,13 +97,13 @@ int main(void)
 		if (x == 2)
 		{
 			p = trazi(H);
-			if(p!=NULL)
-				{
-					printf("Zelite li ispisati MB?\n");
-					scanf(" %s", b);
-					if (strcmp(b, "DA") == 0 || strcmp(b, "Da") == 0 || strcmp(b, "da") == 0 || strcmp(b, "dA") == 0)
-						printf("MB=", p->MB);
-				}
+			if (p != NULL)
+			{
+				printf("Zelite li ispisati MB?\n");
+				scanf(" %s", b);
+				if (strcmp(b, "DA") == 0 || strcmp(b, "Da") == 0 || strcmp(b, "da") == 0 || strcmp(b, "dA") == 0)
+					printf("MB= %d", p->MB);
+			}
 		}
 
 		if (x == 3)
@@ -180,12 +181,12 @@ position trazi(Hashtab H)
 
 	printf("\n Unesi trazeno prezime: ");
 	scanf(" %s", a);
-	t = &a;
+	t = a;
 
 	i = Kljuc(H->VelT, t);
 
 	x = H->hashliste[i];
-	while (strcmp(x->prezime, t) !=0 )
+	while (strcmp(x->prezime, t) != 0)
 		x = x->next;
 
 	if (x == NULL)
@@ -198,7 +199,7 @@ int ispis(Hashtab H)
 {
 	int i = 0;
 	Lista p = NULL;
-	
+
 	for (i = 0;i < 11;i++)
 	{
 		p = H->hashliste[i];
